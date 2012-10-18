@@ -1,5 +1,21 @@
 <div class="center hero-unit">
-	<h1>Sample App</h1>
-	<h2>Home page for sample application</h2>
-	<%= link_to "Sign Up!", signup_path, :class => "btn btn-large btn-primary" %>
+	<% if !signed_in? %>
+		<h1>Sample App</h1>
+		<%= link_to "Sign Up!", signup_path, :class => "btn btn-large btn-primary" %>
+	<% else %>
+		<div class="row">
+			<aside class="span3">
+				<section>
+					<%= render 'shared/user_info' %>
+				</section>
+				<section>
+					<%= render 'shared/micropost_form' %>
+				</section>
+			</aside>
+			<div class="span7">
+				<h3>Micropost Feed</h3>
+				<%= render 'shared/feed' %>
+			</div>
+		</div>
+	<% end %>
 </div>

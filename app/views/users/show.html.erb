@@ -1,11 +1,23 @@
 <% provide(:title, @user.name) %>
-<aside class="span4">
-	<section>
-		<h1>
-			<%= gravatar_for @user %>
-			<%= @user.name %>
-		</h1>
-		<%= @user.email %>
-	</section>
-</aside>
-<br />
+<div class="center hero-unit">
+	<div class="row">
+		<aside class="span3">
+			<section>
+				<h3>
+					<%= gravatar_for @user %>
+					<%= @user.name %>
+				</h3>
+				<%= @user.email %>
+			</section>
+		</aside>
+		<div class="span7">
+			<% if @user.microposts.any? %>
+				<h4>Microposts (<%= @user.microposts.count %>)</h4>
+				<ol class="microposts">
+					<%= render @microposts %>
+				</ol>
+				<%= will_paginate @microposts %>
+			<% end %>
+		</div>
+	</div>
+</div>

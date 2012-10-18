@@ -25,7 +25,6 @@ describe "AuthenticationPages" do
 			before { valid_signin(user) }
 
 			it { should have_selector('title', :text => user.name) }
-			it { should have_link('Users', :href => users_path) }
 			it { should have_link('Profile', :href => user_path(user)) }
 			it { should have_link('Settings', :href => edit_user_path(user)) }
 			it { should have_link('Sign Out', :href => signout_path) }
@@ -42,17 +41,26 @@ describe "AuthenticationPages" do
 			let(:user) { FactoryGirl.create(:user) }
 
 			describe "in the Users Controller" do
-				describe "visiting the User Index" do
-					before { visit users_path }
-					it { should have_selector('title', :text => 'Sign In') }
-				end
-
 				describe "visiting the Edit Page" do
 					before { visit edit_user_path(user) }
 					it { should have_selector('title', :text => 'Sign In') }
 				end
 				describe "submitting to the Update Action" do
 					before { put user_path(user) }
+					specify { response.should redirect_to(signin_path) }
+				end
+			end
+
+			describe "in the Microposts Controller" do
+				describe "submitting to the create action" do
+					before { post microposts_path }
+					specify { response.should redirect_to(signin_path) }
+				end
+				describe "submitting to the destroy action" do
+					before do
+						micropost = FactoryGirl.create(:micropost)
+						delete micropost_path(micropost)
+					end
 					specify { response.should redirect_to(signin_path) }
 				end
 			end
@@ -68,6 +76,18 @@ describe "AuthenticationPages" do
 				describe "after signing in" do
 					it "should render the desired protected page" do
 						page.should have_selector('title', :text => "Edit User")
+					end
+
+					describe "when signing in again" do
+						before do
+							visit signin_path
+							fill_in "Email", :with => user.email
+							fill_in "Password", :with => user.password
+							click_button "Sign In"
+						end
+						it "should rander the default ProfilePage" do
+							page.should have_selector('title', :text => user.name)
+						end
 					end
 				end
 			end
