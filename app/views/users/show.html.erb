@@ -9,8 +9,12 @@
 				</h3>
 				<%= @user.email %>
 			</section>
+			<section>
+				<%= render 'shared/stats' %>
+			</section>
 		</aside>
-		<div class="span7">
+		<div class="span7" style="text-align:left;">
+			<%= render 'follow_form' if signed_in? %>
 			<% if @user.microposts.any? %>
 				<h4>Microposts (<%= @user.microposts.count %>)</h4>
 				<ol class="microposts">
