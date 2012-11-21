@@ -1,4 +1,12 @@
-<span class="content"><%= wrap(f.content) %></span>
+<% if f.priv? && !User.find(f.user).nil? %>
+	<% @user = User.find(f.user) %>
+	<% if current_user?(@user) %>
+		<% @user_from = User.find(f.from) %>
+		<%= "Received from " %>
+		<%= wrap(@user_from.username, @user_from) + ":" %>
+	<% end %>
+<% end %>
+<span class="content"><%= link_users(f.content) %></span>
 <span class="timestamp">
 	Posted <%= time_ago_in_words(f.created_at) %> ago.
 </span>

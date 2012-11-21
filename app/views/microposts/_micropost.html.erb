@@ -1,3 +1,11 @@
+<% if !micropost.priv? %>
 <li>
 	<%= render 'shared/post_layout', :f => micropost %>
 </li>
+<% else %>
+	<% if current_user?(micropost.user) %>
+		<li>
+			<%= render 'shared/post_layout', :f => micropost %>
+		</li>
+	<% end %>
+<% end %>

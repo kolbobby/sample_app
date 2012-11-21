@@ -12,5 +12,8 @@ FactoryGirl.define do
 	factory :micropost do
 		content "Sample content"
 		user
+		factory :p_micropost do
+			priv true
+		end
 	end
 end

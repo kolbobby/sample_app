@@ -15,8 +15,16 @@
 		</aside>
 		<div class="span7" style="text-align:left;">
 			<%= render 'follow_form' if signed_in? %>
+			<h4>Microposts (
+				<% @count = 0 %>
+				<% @user.microposts.each do |m| %>
+				<% if !m.priv? %>
+				<% @count = @count + 1 %>
+				<% end %>
+				<% end %>
+				<%= @count %>
+			)</h4>
 			<% if @user.microposts.any? %>
-				<h4>Microposts (<%= @user.microposts.count %>)</h4>
 				<ol class="microposts">
 					<%= render @microposts %>
 				</ol>

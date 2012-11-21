@@ -13,6 +13,7 @@ class UsersController < ApplicationController
 
   def create
   	@user = User.new(params[:user])
+    @user.username = @user.email[0..@user[:email].index("@") - 1] + "_" + @user.email[@user[:email].index("@") + 1, 2]
   	if @user.save
       sign_in @user
   		flash[:success] = "Welcome to Sample App!"
@@ -25,6 +26,7 @@ class UsersController < ApplicationController
   def show
   	@user = User.find(params[:id])
     @microposts = @user.microposts.paginate(:page => params[:page])
+    @micropost = current_user.microposts.build if signed_in?
   end
   
   def edit

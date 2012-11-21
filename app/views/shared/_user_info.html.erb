@@ -8,5 +8,11 @@
 	<%= link_to "View my profile", current_user %>
 </span>
 <span>
-	<%= pluralize(current_user.microposts.count, "micropost") %>
+	<% @count = -1 %>
+	<% current_user.microposts.each do |m| %>
+		<% if !m.priv? %>
+			<% @count = @count + 1 %>
+		<% end %>
+	<% end %>
+	<%= pluralize(@count, "micropost") %>
 </span>

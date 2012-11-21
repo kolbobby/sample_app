@@ -9,8 +9,10 @@ describe Micropost do
 	it { should respond_to(:content) }
 	it { should respond_to(:user_id) }
 	it { should respond_to(:user) }
+	it { should respond_to(:priv) }
 	its(:user) { should == user }
 	it { should be_valid }
+	it { should_not be_priv }
 
 	describe "when user_id is not present" do
 		before { @micropost.user_id = nil }
@@ -23,6 +25,10 @@ describe Micropost do
 				Micropost.new(:user_id => user.id)
 			end.should raise_error(ActiveModel::MassAssignmentSecurity::Error)
 		end
+	end
+	describe "with priv attribute set to 'true'" do
+		before { @micropost.toggle!(:priv) }
+		it { should be_priv }
 	end
 
 	describe "with blank content" do

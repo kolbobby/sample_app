@@ -196,7 +196,7 @@ DEPENDENCIES
   jquery-rails (= 2.1.3)
   json
   libnotify (= 0.5.9)
-  mysql2
+  mysql2 (~> 0.3.11)
   rails (= 3.2.3)
   rb-inotify (= 0.8.8)
   rspec-rails (= 2.9.0)
